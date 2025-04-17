@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = ({ handleSearchField }) => {
   const handleOnSearchField = (e) => {
@@ -9,14 +9,19 @@ const Header = ({ handleSearchField }) => {
       <div className="container">
         <div className="row">
           <div className="col m-2">
-            <h1 className="">Gatherly</h1>
+            <Link
+              to="/"
+              className="link-offset-2 link-underline link-underline-opacity-0"
+            >
+              <h1>Gatherly</h1>
+            </Link>
           </div>
-          <div className="col m-2">
+          <div className="col m-2 mt-4">
             <input
               className="float-end"
-              type="text"
+              type="search"
               name="searchField"
-              placeholder="Search by title and type"
+              placeholder="Search by title, topic, type"
               onChange={handleOnSearchField}
             />
           </div>

@@ -8,15 +8,29 @@ const EventListing = () => {
     "https://gatherly-api.vercel.app/events"
   );
   const [eventType, setEventType] = useState("Both");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredEvent = data?.filter((item) => item.type === eventType);
   const handleSelectEventType = (e) => {
     setEventType(e.target.value);
   };
 
   const handleSearchField = (searchedText) => {
-    setEventType(searchedText);
+    setSearchTerm(searchedText);
   };
+
+  const renderEvent = data?.filter((event) => {
+    const matchesType = eventType === "Both" || event.type === eventType;
+
+    const lowerSearch = searchTerm.toLowerCase();
+
+    const matchesSearch =
+      searchTerm === "" ||
+      event.title?.toLowerCase().includes(lowerSearch) ||
+      event.topic?.toLowerCase().includes(lowerSearch) ||
+      event.type?.toLowerCase().includes(lowerSearch);
+
+    return matchesType && matchesSearch;
+  });
 
   return (
     <>
@@ -43,9 +57,9 @@ const EventListing = () => {
         {loading && <p>Loading events...</p>}
         {error && <p className="text-danger">{error}</p>}
 
-        {data && data.length > 0 && eventType === "Both" ? (
+        {renderEvent && renderEvent.length > 0 ? (
           <div className="row g-4">
-            {data.map((item) => (
+            {renderEvent.map((item) => (
               <div key={item._id} className="col-md-6 col-lg-4">
                 <figure className="figure position-relative shadow-sm rounded overflow-hidden">
                   <span className="badge bg-dark position-absolute top-0 start-0 m-2 px-2 py-1">
@@ -71,15 +85,13 @@ const EventListing = () => {
           </div>
         ) : (
           <div className="row g-4">
-            {filteredEvent?.map((item) => (
+            {data?.map((item) => (
               <div key={item._id} className="col-md-6 col-lg-4">
                 <figure className="figure position-relative shadow-sm rounded overflow-hidden">
-                  {/* Event Type Badge */}
                   <span className="badge bg-dark position-absolute top-0 start-0 m-2 px-2 py-1">
                     {item.type} Event
                   </span>
 
-                  {/* Event Image */}
                   <Link to={`/event-details/${item.title}`}>
                     <img
                       src={item.thumbnail}
@@ -89,7 +101,6 @@ const EventListing = () => {
                     />
                   </Link>
 
-                  {/* Event Details */}
                   <figcaption className="figure-caption text-muted mt-2">
                     {new Date(item.date).toDateString()}
                   </figcaption>

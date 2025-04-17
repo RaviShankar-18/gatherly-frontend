@@ -40,11 +40,35 @@ const EventDetails = () => {
               <p>Venue: {data?.venue}</p>
               <p>{data?.pricing}</p>
             </div>
+
             <div>
               <h4 className="my-2">Speakers: ({data?.speakers.length})</h4>
-              <p>
-                <strong>{data?.speakers.join(" ")}</strong>
-              </p>
+              <div className="d-flex flex-wrap gap-3">
+                {data?.speakers.map((speaker, index) => (
+                  <div
+                    key={index}
+                    className="card p-3 shadow text-center"
+                    style={{
+                      width: "150px",
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        speaker
+                      )}&background=random&size=100`}
+                      alt={speaker}
+                      className="rounded-circle mx-auto"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <p className="mt-3 fw-semibold mb-0">{speaker}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
