@@ -15,7 +15,6 @@ const useFetch = (url, initialData) => {
         }
 
         const json = await response.json();
-        console.log(json);
         if (json) {
           setLoading(false);
           setData(json);
