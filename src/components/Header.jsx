@@ -1,3 +1,4 @@
+import logo from "../assets/gatherly-logo.png";
 import { Link } from "react-router-dom";
 
 const Header = ({ handleSearchField }) => {
@@ -14,7 +15,18 @@ const Header = ({ handleSearchField }) => {
               to="/"
               className="link-offset-2 link-underline link-underline-opacity-0"
             >
-              <h1 className="fs-2 fw-bold mb-0">Gatherly</h1>
+              <h1 className="mb-0">
+                <img
+                  src={logo}
+                  alt="Gatherly Logo"
+                  className="img-fluid"
+                  style={{
+                    maxHeight: "100px",
+                    width: "auto",
+                    verticalAlign: "middle",
+                  }}
+                />
+              </h1>
             </Link>
           </div>
           <div className="col-12 col-sm-6">
